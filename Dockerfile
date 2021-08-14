@@ -1,5 +1,5 @@
 FROM python:3.7-alpine 
-# the image our docker-file will be build upon. This is a light-weight python image.
+# the image our docker-file will be build upon. This is a light-weight minimum python image.
 # you can find images here: https://hub.docker.com/
 
 LABEL maintainer="MoellerAI"
@@ -13,3 +13,18 @@ RUN pip install -r /requirements.txt
 # run our requirements using pip.
 
 RUN mkdir /app
+WORKDIR /app
+COPY ./app /app
+# creates an empty folder on our docker-image called /app.
+# then it switches to that folder as its default directory.
+# everything we will run from our docker-container will start from the /app folder unless else specified.
+# the last thing we do is to copy the folder from our local machine to the docker-image.
+
+RUN adduser -D user
+USER user
+# we create a temporary user which can use the docker container instead of using the root. 
+# switch to the new user. This is due to security purposes.
+
+
+
+# THIS DOCKERFILE CAN BE RUN USING "docker build ."
