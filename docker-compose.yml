@@ -1,0 +1,21 @@
+version: "3"
+# version of docker-compose used.
+
+services:
+    # list of services.
+    app:
+        build:
+            context: .
+            # we have a service called app and running it from the current folder.
+        ports:
+            - "8000:8000"
+            # we are going to map our project from port 8000 on our host to port 8000 on our image.
+        volumes:
+            # volume allows us to get the updates that we make to our project into our docker-image in real time.
+            - ./app:/app
+            # maps the app directory which we have in our project to the app directory in the docker image.
+
+        command: >
+            sh -c "python manage.py runserver 0.0.0.0:8000"
+        # command that is used to run our application in our docker container.
+        # we can connect to the app on our local machine on port 8000.
