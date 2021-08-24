@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
 class UserManager(BaseUserManager):
 
     def create_user(self, email, password = None, **extra_fields):
-        """Creates and saves a new user.
+        """Creates and saves a new Suser.
         
         Args:
             email [str]: Email-address for user.
