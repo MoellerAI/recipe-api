@@ -16,6 +16,24 @@ services:
             # maps the app directory which we have in our project to the app directory in the docker image.
 
         command: >
-            sh -c "python manage.py runserver 0.0.0.0:8000"
+            sh -c "python manage.py wait_for_db && 
+                   python manage.py migrate &&
+                   python manage.py runserver 0.0.0.0:8000"
         # command that is used to run our application in our docker container.
         # we can connect to the app on our local machine on port 8000.
+
+        environment: 
+            - DB_HOST=db
+            - DB_NAME=app
+            - DB_USER=postgres
+            - DB_PASS=supersecretpassword
+
+        depends_on: 
+            - db
+
+    db:
+        image: postgres:10-alpine
+        environment:
+            - POSTGRES_DB=app
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=supersecretpassword
